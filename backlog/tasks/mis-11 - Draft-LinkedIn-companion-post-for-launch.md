@@ -45,6 +45,17 @@ Companion LinkedIn post per PRD §6 and DoD item 3. Hook: deadline-bearing-down 
 5. Check all ACs via CLI, write final summary, set Done
 <!-- SECTION:PLAN:END -->
 
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+## Agent Recommendations
+- Merge this branch after MIS-2 (deploy) so the link placeholder can be updated in one pass, or update the link before merging
+- Schedule publish mid-week 08:00–10:00 MEZ per PRD §6 distribution guidance
+
+## PR
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/5
+<!-- SECTION:NOTES:END -->
+
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
