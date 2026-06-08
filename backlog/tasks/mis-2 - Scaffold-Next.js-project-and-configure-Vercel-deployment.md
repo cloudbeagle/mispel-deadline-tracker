@@ -5,7 +5,7 @@ status: Needs Input
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 19:15'
-updated_date: '2026-06-08 19:22'
+updated_date: '2026-06-08 19:23'
 labels: []
 dependencies: []
 references:
@@ -77,4 +77,24 @@ The commit is at `045fb35` on branch `tasks/back-mis-2`.
 
 ### Recommendation
 Option 1 or Option 3. Option 3 (GitHub→Vercel dashboard integration) is the recommended Vercel free-tier pattern and avoids needing Vercel CLI at all. Human steps: (a) go to vercel.com → New Project → Import from GitHub → select cloudbeagle/mispel-deadline-tracker; (b) deploy; (c) mark AC #3 done. No local CLI needed.
+
+## Agent Recommendations
+**Recommended path (Option 3 — no CLI needed):**
+1. Go to https://vercel.com → New Project
+2. Import from GitHub → select `cloudbeagle/mispel-deadline-tracker`
+3. Deploy (Vercel auto-detects Next.js, no config needed)
+4. Confirm deploy succeeds
+5. Mark AC #3 done, set task status → Done
+**Alternative path (Option 1 — CLI):**
+```bash
+npm install -g vercel
+cd /Users/gzach/taskpilot-worktrees/mis-2
+vercel login
+vercel link  # link to existing project or create new
+vercel --prod
+```
+After Vercel is connected, mark AC #3 done and close the task.
+
+## PR
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/2
 <!-- SECTION:NOTES:END -->
