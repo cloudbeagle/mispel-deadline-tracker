@@ -5,7 +5,7 @@ status: Done
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 19:15'
-updated_date: '2026-06-08 20:48'
+updated_date: '2026-06-08 20:51'
 labels: []
 dependencies: []
 references:
@@ -97,6 +97,13 @@ After Vercel is connected, mark AC #3 done and close the task.
 
 ## PR
 https://github.com/cloudbeagle/mispel-deadline-tracker/pull/2
+
+## AC#3 Resolved (nanny, 2026-06-08)
+Operator authenticated Vercel CLI (whoami=gzach). Nanny ran from worktree ~/taskpilot-worktrees/mis-2:
+- vercel link --yes -> linked gzachs-projects/mispel-deadline-tracker (Next.js auto-detected)
+- vercel --prod --yes -> readyState=READY, target=production
+- Live: https://mispel-deadline-tracker.vercel.app (dpl_FuE6xzTWRHY1CKDGkb9S1vT7gwLa)
+All 6 ACs met. MERGE-READY but HELD per operator. On merge: gh pr merge 2 --squash --admin; sets Done + scaffold on main -> unblocks MIS-4..9.
 <!-- SECTION:NOTES:END -->
 
 ## Final Summary
@@ -106,15 +113,15 @@ Scaffolded Next.js 15 + React 19 + Tailwind CSS v4 + shadcn/ui on cloudbeagle/mi
 
 Changes:
 - Public GitHub repo; default branch renamed master→main
-- Next.js 15.5.19 + React 19 + Tailwind v4 (CSS-first) + shadcn/ui (new-york style) scaffolded
-- TypeScript strict mode + ESLint (next/core-web-vitals + next/typescript) enabled
+- Next.js 15.5.19 + React 19 + Tailwind v4 (CSS-first) + shadcn/ui (new-york style)
+- TypeScript strict mode + ESLint (next/core-web-vitals + next/typescript)
 - .gitignore covers .env*, node_modules/, .next/, .vercel
 - Root / renders placeholder 'MiSpeL Deadline Tracker' heading
 - Vercel project linked (gzachs-projects/mispel-deadline-tracker); deployed to production
 
 Verification:
-- npm run build → exit 0 (compiled successfully, 4/4 static pages)
-- vercel --prod → readyState=READY, live at https://mispel-deadline-tracker.vercel.app
+- npm run build: exit 0, 4/4 static pages compiled
+- vercel --prod: readyState=READY, live at https://mispel-deadline-tracker.vercel.app
 
-Unblocks: MIS-3 through MIS-9 (all depend on this scaffold).
+Unblocks: MIS-3 through MIS-9
 <!-- SECTION:FINAL_SUMMARY:END -->
