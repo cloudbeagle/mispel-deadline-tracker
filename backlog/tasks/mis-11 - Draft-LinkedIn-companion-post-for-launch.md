@@ -5,7 +5,7 @@ status: Done
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 19:17'
-updated_date: '2026-06-08 20:55'
+updated_date: '2026-06-08 20:56'
 labels: []
 dependencies:
   - MIS-2
@@ -19,9 +19,11 @@ ordinal: 13000
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-**State:** Done · **Stage:** implementation complete / **Next:** none; narrator will document.
+## Synopsis
+**State:** Done · **Stage:** narrated  
+**Next:** Merge PR / human review pending.
 
-Companion LinkedIn post per PRD §6 and DoD item 3. Hook: deadline-bearing-down framing. Target audience: DE energy-law + storage LinkedIn crowd. Per cleantech-credentials-handoff.md project #2: 'MiSpeL in plain English — und ein kostenloser Deadline-Tracker.' Post should tag/cite the bne/EnBW/1KOMMA5° Stellungnahme authors. Output: a ready-to-publish post saved in the repo.
+Companion LinkedIn post per PRD §6 and DoD item 3. Hook: deadline-bearing-down framing. Target audience: DE energy-law + storage LinkedIn crowd. Per cleantech-credentials-handoff.md project #2: 'MiSpeL in plain English — und ein kostenloser Deadline-Tracker.' Post should tag/cite the bne/EnBW/1KOMMA5° Stellungnahme authors. Output: a ready-to-publish post saved in the repo (documentation: backlog/docs/doc-mis-11 - LinkedIn-Launch-Post.md).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
