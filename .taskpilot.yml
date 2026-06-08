@@ -1,0 +1,56 @@
+# taskpilot project configuration
+# See: https://github.com/cloudbeagle/taskpilot
+
+# North star documents injected into agent briefs (optional)
+# Agents read these to understand project context and goals
+north_star: []
+  # - PRODUCT.md
+  # - FRAMEWORK.md
+
+# Extra files to seed into agent worktrees (optional)
+# HANDOFF-TEMPLATE.md is always included automatically
+seed_paths: []
+  # - .claude/settings.local.json
+
+# Knowledge base seeding (optional)
+# knowledge/INDEX.md is seeded automatically when present (set false to disable)
+# seed_knowledge_index: true
+# Seed knowledge pages referenced in the task description (default: false)
+# seed_knowledge_pages: false
+
+# Per-run budget limits
+# Wall-time: seconds before the agent is killed and the task flipped to Needs Input.
+# Default: 3600 (1 hour). Set to 0 to disable (unlimited).
+# Note: turn count is not configurable — the claude CLI does not expose --max-turns.
+max_wall_time_seconds: 3600
+
+# Dollar cap per run: passed as --max-budget-usd to the claude CLI.
+# "" = no cap (default). Example: "5.00" limits each run to $5 of API spend.
+# max_budget_usd: ""
+
+# Auto-release: when true, the watcher runs ./release.sh automatically
+# whenever master advances beyond the last-promoted SHA. Requires a
+# ./release.sh at the project root that runs tests and promotes stable.
+# If tests fail, stable is left untouched and a GitHub issue is opened.
+# auto_release: false
+
+# Auto-promote groomed tasks: when true, the orchestrator safety net is disabled
+# and the groom agent may set status to 'To Do' directly (skipping human AC review).
+# Default: false (Needs Input gate is enforced). Enable only when you trust the
+# groom agent's AC quality without a human check. Per-task bypass: add the
+# 'autogroom' label to a specific task instead of enabling this globally.
+# auto_promote_groomed: false
+
+# Auto-commit task-file changes to master: when false (default), the watcher
+# never commits backlog/ changes directly to master. Master advances only via
+# PR merges (branch-owns-state model). Set to true to restore the pre-TP-88
+# behaviour where the watcher auto-committed orphan task-file edits to master.
+# auto_commit_master: false
+
+# Per-role model overrides. Narrate and groom default to "haiku" (docs and
+# grooming don't need the build model — main token-cost lever); build and
+# continue inherit the global `model` (default: sonnet).
+# model_build: sonnet
+# model_continue: sonnet
+# model_narrate: haiku
+# model_groom: haiku
