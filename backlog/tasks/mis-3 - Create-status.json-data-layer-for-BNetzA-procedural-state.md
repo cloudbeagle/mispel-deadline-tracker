@@ -68,4 +68,13 @@ MIS-2 (`tasks/back-mis-2`) scaffolded Next.js 15 + React 19 + Tailwind v4 + shad
 
 ### Recommendation
 Merge MIS-2 first. After merge, re-queue MIS-3; the resuming agent just needs to `npm install && npm run build` in the worktree to confirm AC#6.
+
+## Agent Recommendations
+1. Merge MIS-2 PR first
+2. Re-queue MIS-3 — the resuming agent will find `public/status.json` + `lib/status.ts` already committed
+3. Resuming agent: `npm install && npm run build`; if it passes, check AC#6 and set status Done
+4. `lib/status.ts` uses `import statusData from '../public/status.json'` — requires `"resolveJsonModule": true` in tsconfig (already set in MIS-2's tsconfig.json)
+
+## PR
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/3
 <!-- SECTION:NOTES:END -->
