@@ -41,6 +41,17 @@ Public-facing repo README in German (primary audience: DE Mittelstand operators)
 1. Write README.md at repo root (German primary, EN summary at bottom)\n   - Sections: Was ist MiSpeL, Für wen, Was es NICHT ist, Anleitung (URL + demo), Datenquellen, Lizenz\n   - Author block + domain-honest framing\n   - Reach-out hook (30-Min-Walkthrough bis 30.06.)\n   - EN summary (2-3 paragraphs)\n2. Write LICENSE (MIT 2026 Gaylord Zach)\n3. Write LICENSE-DATA.md (CC BY 4.0 for data/content)\n4. README Lizenz section references both license files\n5. Commit all three files on branch tasks/back-mis-10\n6. Check off all 7 ACs\n7. Write final summary + set Done\n\nNote: LinkedIn URL = https://www.linkedin.com/in/gaylordzach/ (standard format, consistent with email gaylordzach@gmail.com)
 <!-- SECTION:PLAN:END -->
 
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+## Agent Recommendations
+- Verify LinkedIn URL before merging to main.
+- MIS-2 (Next.js scaffold + Vercel deployment) should update the demo URL in README once the deployment is live.
+
+## PR
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/6
+<!-- SECTION:NOTES:END -->
+
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
