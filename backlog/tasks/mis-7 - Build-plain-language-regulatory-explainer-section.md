@@ -50,6 +50,17 @@ German-language explainer section covering: what MiSpeL is, who is affected, the
 7. Check all ACs, write final summary, set Done
 <!-- SECTION:PLAN:END -->
 
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+## Agent Recommendations
+- When merging with MIS-4 branch, add `<RegulatoryExplainer />` to `app/page.tsx` below the `<WhatHappensExplainer />` section.
+- The `WhatHappensExplainer` from MIS-4 overlaps somewhat with this component (both cover the two options); consider whether to keep both or consolidate. `RegulatoryExplainer` is more detailed and should take precedence.
+
+## PR
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/10
+<!-- SECTION:NOTES:END -->
+
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
