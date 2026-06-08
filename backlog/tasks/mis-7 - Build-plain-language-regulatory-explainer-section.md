@@ -50,6 +50,13 @@ German-language explainer section covering: what MiSpeL is, who is affected, the
 7. Check all ACs, write final summary, set Done
 <!-- SECTION:PLAN:END -->
 
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+## PR
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/10 (pre-existing)
+<!-- SECTION:NOTES:END -->
+
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
