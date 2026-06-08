@@ -3,6 +3,7 @@ import { getStatus } from '../lib/status';
 import StatusBanner from '../components/StatusBanner';
 import CountdownHero from '../components/CountdownHero';
 import WhatHappensExplainer from '../components/WhatHappensExplainer';
+import AbgrenzungChooser from '../components/AbgrenzungChooser';
 
 // 2026-06-30 23:59 CEST (UTC+2) = 2026-06-30T21:59:00Z
 const DEADLINE_UTC = new Date('2026-06-30T21:59:00Z').getTime();
@@ -17,7 +18,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-2xl px-4 py-16 space-y-8">
+      <div className="mx-auto max-w-3xl px-4 py-16 space-y-10">
         <header className="text-center space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">MiSpeL Deadline Tracker</h1>
           <p className="text-muted-foreground text-sm">
@@ -32,6 +33,16 @@ export default function Home() {
         </div>
 
         <WhatHappensExplainer />
+
+        <section className="space-y-2">
+          <h2 className="text-xl font-semibold">Abgrenzung vs. Pauschale — Entscheidungshilfe</h2>
+          <p className="text-sm text-muted-foreground">
+            Welche MiSpeL-Option passt zu Ihrer Anlage? Geben Sie Ihre Anlagendaten ein
+            und erhalten Sie einen groben €-Vergleich.
+          </p>
+        </section>
+
+        <AbgrenzungChooser />
 
         <footer className="border-t pt-6 text-center text-xs text-muted-foreground space-y-1">
           <p>
