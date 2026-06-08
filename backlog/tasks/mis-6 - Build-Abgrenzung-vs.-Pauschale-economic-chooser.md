@@ -5,7 +5,7 @@ status: Done
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 19:16'
-updated_date: '2026-06-08 22:13'
+updated_date: '2026-06-08 22:40'
 labels: []
 dependencies:
   - MIS-2
@@ -19,7 +19,7 @@ ordinal: 6000
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-**State:** Done · **Stage:** implementation complete / **Next:** none; narrator will document.
+**State:** Done · **Stage:** PR review fixes applied · **Next:** none
 
 The credential core of the tool. An input form + side-by-side € comparison that tells the operator which of the two MiSpeL options (§19 Abs. 3b Abgrenzungsoption vs §19 Abs. 3c Pauschaloption) fits their asset and the approximate annual cost/revenue delta. Per PRD §5, every coefficient is labelled 'Annahme' with source. Open numbers (where the Festlegung hasn't settled the coefficient) are flagged as 'noch offen — Festlegung ausstehend'. Output is order-of-magnitude decision aid, never a binding figure. State encodable in querystring (feeds MIS-8).
 <!-- SECTION:DESCRIPTION:END -->
@@ -41,9 +41,18 @@ The credential core of the tool. An input form + side-by-side € comparison tha
 1. Create lib/chooser.ts — pure calculation logic (coefficients, formulas, types)\n2. Create components/AbgrenzungChooser.tsx — 'use client' form + side-by-side output + verdict + disclaimer\n3. Update app/page.tsx — wire chooser into homepage\n4. Verify TypeScript + build pass\n5. Commit
 <!-- SECTION:PLAN:END -->
 
-## Implementation Notes
+## Final Summary
 
-<!-- SECTION:NOTES:BEGIN -->
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+**PR review fixes (BACK-MIS-6):**
+- `components/AbgrenzungChooser.tsx:281` — fixed unhandled clipboard rejection: `navigator.clipboard?.writeText().catch(()=>{})` (guards denied permission and HTTP context where clipboard API absent)
+- `lib/chooser.ts:142` — removed dead ternary in abgrenzung arm; inlined `'darüber'` (branch only entered when delta > 100, ternary always resolved to same value)
+- `lib/chooser.ts:141-146` — added guard for `gruenstromAnteil === 0`: emits 'kein Grünstromanteil — Abgrenzungsoption bringt keinen Erlösvorteil' instead of misleading 'lohnt sich ab ca. 0 €'
+- `HANDOFF.md` — documented composite `groesse=kWh_kW` querystring format for MIS-8 consumers
+
+**tsc --noEmit:** clean after fixes.
+<!-- SECTION:FINAL_SUMMARY:END -->
+
 ## Agent Recommendations
 1. Run MIS-2 first (scaffold blocks everything); MIS-3 can go in parallel once repo exists
 2. MIS-4, MIS-5, MIS-6, MIS-7 are the four core v0 features — can build in parallel after scaffold
@@ -53,26 +62,28 @@ The credential core of the tool. An input form + side-by-side € comparison tha
 
 ## PR
 https://github.com/cloudbeagle/mispel-deadline-tracker/pull/9
+
+## External Feedback
+_PR #9_
+
+**gzach** (review[COMMENTED], 2026-06-08T22:35:47Z):
+> <!-- taskpilot-review -->
+> 
+> ## Code Review: MIS-6 — Abgrenzung vs. Pauschale economic chooser
+> 
+> ### Findings
+> 
+> `components/AbgrenzungChooser.tsx:281` ⚠️ **WARN — unhandled promise rejection:** `navigator.clipboard.writeText(shareUrl)` has no `.catch()`. Denied clipboard permissions throw an unhandled rejection, which logs as a runtime error in production monitoring. Fix: `navigator.clipboard?.writeText(shareUrl).catch(() => {})` (also guards the rare case where `navigator.clipboard` is undefined on HTTP).
+> 
+> `lib/chooser.ts:~207` ℹ️ **INFO — dead branch:** In the `empfehlung === 'abgrenzung'` arm, `delta > 0 ? 'darüber' : 'darunter'` always resolves to `'darüber'` — the branch is only entered when `delta > 100`. Remove the ternary and inline `'darüber'`.
+> 
+> `lib/chooser.ts:~165` ℹ️ **INFO — misleading verdict for full-grid assets:** When `netzanteilProzent = 100`, `gruenstromAnteil = 0` → `erloesFaktor = 0` → `breakEvenErloese` stays `0`. The `abgrenzung` verdict then reads *"lohnt sich ab ca. 0 €/Jahr Erlös"* for a purely grid-fed asset — misleading. Add a guard: if `erloesFaktor === 0`, skip the break-even line or emit a different message (e.g. *"kein Grünstromanteil → Abgrenzungsoption bringt keinen Erlösvorteil"*).
+> 
+> `lib/chooser.ts` / AC #7 ℹ️ **INFO — querystring format deviation:** AC #7 specifies `?groesse=500&netzanteil=40&erloese=25000&messtechnik=rlm` (kWh only) but implementation encodes `groesse=500_250` (kWh underscore kW). HANDOFF notes acknowledge the format. Not a runtime bug and the composite encoding is more complete; document the actual format in the task/MIS-8 handoff so consumers don't parse it wrong.
+> 
+> ### Summary
+> 
+> Implementation is clean: typed module, pure calculation, proper SSR guard via `useEffect`, input clamping, querystring round-trip. All 7 ACs satisfied in substance. One finding (clipboard rejection) should be fixed before merge.
+> 
+> taskpilot-review: CHANGES
 <!-- SECTION:NOTES:END -->
-
-## Final Summary
-
-<!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Implemented Abgrenzung vs. Pauschale economic chooser — the credential core of the MiSpeL tracker.
-
-**Changes:**
-- `lib/chooser.ts` — pure calculation module: typed inputs/outputs, assumption constants from BNetzA Konsultationsentwurf 18.09.2025 (BK6-25-038), `calculate()`, `buildQueryString()`, `parseQueryString()`, `fmt()`. Open coefficients flagged `offen: true` (Grünstrom-Mehrertrag +20%, Pauschalansatz-Abschlag −30%).
-- `components/AbgrenzungChooser.tsx` — `use client` React component: 4-field input form (kWh/kW/Netzbezugsanteil/Erlöse + RLM radio), side-by-side comparison cards (Abgrenzung §19 Abs. 3b / Pauschale §19 Abs. 3c), EurRow with sign-coloured values, collapsible Annahmen per option, plain-language verdict with break-even, disclaimer banner, shareable URL input with copy-button.
-- `app/page.tsx` — wires chooser into homepage.
-
-**All 7 ACs satisfied:**
-1. All 4 input fields present (kWh, kW, Netzbezugsanteil %, Erlöse €, RLM ja/nein)
-2. Side-by-side Messkosten / Erlösauswirkung / Netto-Vorteil cards
-3. Plain-language verdict with break-even Erlöswert
-4. Each coefficient labelled with Annahme + source; open ones flagged amber
-5. Disclaimer banner at top
-6. §19 Abs. 3b / §19 Abs. 3c EEG labels per card header
-7. Querystring serialization: `?groesse=500_250&netzanteil=40&erloese=25000&messtechnik=rlm` (hydrates from URL on mount)
-
-**Tests:** `npx tsc --noEmit` clean; `next build` passes (3.39 kB route, static output).
-<!-- SECTION:FINAL_SUMMARY:END -->
