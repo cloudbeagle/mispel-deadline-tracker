@@ -5,7 +5,7 @@ status: Done
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 19:16'
-updated_date: '2026-06-08 22:20'
+updated_date: '2026-06-08 22:22'
 labels: []
 dependencies:
   - MIS-2
@@ -23,7 +23,8 @@ ordinal: 10000
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
 ## Synopsis
-**State:** Done · **Stage:** implementation complete / **Next:** none; narrator will document.
+**State:** Done · **Stage:** narrated
+**Next:** Merge PR / human review pending.
 
 Standalone `/methodik` page per PRD §6 viral design. Named author, all data sources, all computation assumptions, anti-promise section, and the free 30-min consultation reach-out hook. This is the trust layer that makes the credential credible to the Stellungnahme-author audience who will fact-check it.
 <!-- SECTION:DESCRIPTION:END -->
