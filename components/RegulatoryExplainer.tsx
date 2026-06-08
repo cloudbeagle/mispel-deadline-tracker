@@ -1,12 +1,14 @@
+import type { ReactNode } from 'react';
+
 const BNETZA_URL =
   'https://www.bundesnetzagentur.de/DE/Fachthemen/ElektrizitaetundGas/ErneuerbareEnergien/EEG_Aufsicht/MiSpeL/start.html';
 const EEG_85D_URL = 'https://www.gesetze-im-internet.de/eeg_2023/__85d.html';
 const EEG_19_URL = 'https://www.gesetze-im-internet.de/eeg_2023/__19.html';
 const KONSULTATION_URL =
   'https://www.bundesnetzagentur.de/DE/Fachthemen/ElektrizitaetundGas/ErneuerbareEnergien/EEG_Aufsicht/MiSpeL/artikel.html';
-const CONTACT_EMAIL = 'mailto:gaylord.zach@s2tberlin.com';
+const CONTACT_EMAIL = `mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'gaylord.zach@s2tberlin.com'}`;
 
-function Src({ href, children }: { href: string; children: React.ReactNode }) {
+function Src({ href, children }: { href: string; children: ReactNode }) {
   return (
     <a
       href={href}
