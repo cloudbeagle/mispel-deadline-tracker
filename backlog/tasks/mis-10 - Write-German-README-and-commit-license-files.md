@@ -5,7 +5,7 @@ status: Done
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 19:16'
-updated_date: '2026-06-08 20:55'
+updated_date: '2026-06-08 20:57'
 labels: []
 dependencies:
   - MIS-2
@@ -19,9 +19,17 @@ ordinal: 11000
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-**State:** Done · **Stage:** implementation complete / **Next:** none; narrator will document.
+## Synopsis
+
+**State:** Done · **Stage:** narrated · **Next:** Merge PR / human review pending.
+
+---
 
 Public-facing repo README in German (primary audience: DE Mittelstand operators) plus the two required license files. Per PRD §10 DoD item 1+6 and cleantech-credentials-handoff.md constraints. README must include author block + reach-out hook + anti-promise + domain-honest framing. EN summary section for broader audience.
+
+## Documentation
+
+Full implementation documented in `backlog/docs/doc-mis-10 - German-README-and-Licenses.md`
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
