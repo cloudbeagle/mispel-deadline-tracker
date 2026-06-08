@@ -5,7 +5,7 @@ status: Needs Input
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 19:15'
-updated_date: '2026-06-08 19:25'
+updated_date: '2026-06-08 19:31'
 labels: []
 dependencies:
   - MIS-2
@@ -20,8 +20,8 @@ ordinal: 3000
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
 ## Synopsis
-**State:** Needs Input · **Stage:** AC#1-5 done; blocked on MIS-2 scaffold merge to verify AC#6 (`npm run build`)
-**Next:** merge MIS-2 PR, then re-queue MIS-3; resuming agent runs `npm run build` to close AC#6.
+**State:** Needs Input · **Stage:** PR feedback addressed; awaiting MIS-2 merge to verify AC#6
+**Next:** (1) Re-review PR #3 — feedback addressed in commit `54dfabe`; (2) merge MIS-2; (3) re-queue MIS-3 for AC#6 (`npm run build`) verification.
 
 Hand-maintained versioned data file that drives the live status banner, countdown, and OG card. This is the single authoritative data source for: current MiSpeL procedure phase, date of last BNetzA update, whether the Festlegung has been issued, and the statutory deadline. Follows PRD §3 "live data feed" spec. Pre-stage the "Festlegung erlassen am [date]" state so flipping it on launch day requires a one-line JSON edit.
 <!-- SECTION:DESCRIPTION:END -->
@@ -48,32 +48,21 @@ Hand-maintained versioned data file that drives the live status banner, countdow
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-## Needs Input
-AC#6 (`npm run build`) cannot be verified — Next.js scaffold not on main branch.
+## PR Feedback Addressed (commit `54dfabe`)
 
-### Trigger
-Discovered dependency: `npm run build` requires `package.json` + Next.js (`next build`) from MIS-2's branch (`tasks/back-mis-2`), which has not yet merged to main. Creating a duplicate scaffold on this branch would cause merge conflicts.
+Three findings from gzach review resolved:
 
-### Context
-ACs #1-5 are complete and committed (commit `90e532d` on `tasks/back-mis-3`):
-- `public/status.json` populated with all required fields
-- `lib/status.ts` defines `MiSpeLStatus` interface + `getStatus()` with ISO-date + type validation
+1. **Missing-key error** — added `if (!('festlegung_date' in d))` check before null/type check; absent key now throws `'festlegung_date is required'` (was misleadingly `'must be ISO date or null'`)
+2. **Long line** — split compound `festlegung_date` condition onto two lines
+3. **Test file** — created `tests/status.test.ts` with 8 cases using `node:test` + `node:assert/strict` (no external deps): valid input, ISO date string, missing field, bad ISO date, absent key, null, explicit undefined, non-https URL, non-object root; also exported `validateStatus` for testability; run with `npx tsx --test tests/status.test.ts`
 
-MIS-2 (`tasks/back-mis-2`) scaffolded Next.js 15 + React 19 + Tailwind v4 + shadcn/ui. Its `build` script is `next build`. This branch (MIS-3) was cut from main before MIS-2 merged, so no `package.json` exists here.
+Reviewer also suggested wiring `getStatus()` into an SSG page — deferred to MIS-5/MIS-6 which will create actual pages; those pages will call `getStatus()` at build time naturally.
 
-### Options considered
-1. **Escalate and wait** — cleanest; watcher re-queues after MIS-2 merges ✓
-2. **Duplicate scaffold** — creates guaranteed merge conflict on `package.json`, `tsconfig.json`, `next.config.ts`
-3. **Minimal tsc build** — satisfies AC#6 letter but not spirit (`next build` intent); still conflicts on merge
+## Still Blocked: AC#6
 
-### Recommendation
-Merge MIS-2 first. After merge, re-queue MIS-3; the resuming agent just needs to `npm install && npm run build` in the worktree to confirm AC#6.
+`npm run build` still requires `package.json` from MIS-2. Branch `tasks/back-mis-2` not yet merged to main.
 
-## Agent Recommendations
-1. Merge MIS-2 PR first
-2. Re-queue MIS-3 — the resuming agent will find `public/status.json` + `lib/status.ts` already committed
-3. Resuming agent: `npm install && npm run build`; if it passes, check AC#6 and set status Done
-4. `lib/status.ts` uses `import statusData from '../public/status.json'` — requires `"resolveJsonModule": true` in tsconfig (already set in MIS-2's tsconfig.json)
+**Next agent:** after MIS-2 merges, rebase `tasks/back-mis-3` onto main (or merge main), then run `npm install && npm run build`. If exits 0, check AC#6 and set Done.
 
 ## PR
 https://github.com/cloudbeagle/mispel-deadline-tracker/pull/3
