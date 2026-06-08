@@ -11,7 +11,7 @@ export interface MiSpeLStatus {
 
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
-function validateStatus(data: unknown): MiSpeLStatus {
+export function validateStatus(data: unknown): MiSpeLStatus {
   if (typeof data !== 'object' || data === null) {
     throw new Error('status.json: root must be an object');
   }
@@ -22,7 +22,10 @@ function validateStatus(data: unknown): MiSpeLStatus {
     throw new Error('status.json: last_bnetza_update must be ISO date');
   if (typeof d.festlegung_issued !== 'boolean')
     throw new Error('status.json: festlegung_issued must be boolean');
-  if (d.festlegung_date !== null && (typeof d.festlegung_date !== 'string' || !ISO_DATE_RE.test(d.festlegung_date)))
+  if (!('festlegung_date' in d))
+    throw new Error('status.json: festlegung_date is required');
+  if (d.festlegung_date !== null &&
+      (typeof d.festlegung_date !== 'string' || !ISO_DATE_RE.test(d.festlegung_date)))
     throw new Error('status.json: festlegung_date must be ISO date or null');
   if (typeof d.statutory_deadline !== 'string' || !ISO_DATE_RE.test(d.statutory_deadline))
     throw new Error('status.json: statutory_deadline must be ISO date');
