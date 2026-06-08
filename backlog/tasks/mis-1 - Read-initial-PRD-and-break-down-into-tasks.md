@@ -5,7 +5,7 @@ status: Done
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 18:31'
-updated_date: '2026-06-08 19:19'
+updated_date: '2026-06-08 19:21'
 labels: []
 dependencies: []
 ordinal: 1000
@@ -15,12 +15,47 @@ ordinal: 1000
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
 ## Synopsis
-**State:** Done · **Stage:** implementation complete
-**Next:** none; narrator will document.
+**State:** Done · **Stage:** narrated
+**Next:** Merge PR / human review pending.
 
 Rung 0 Project #2 — TIME-BOMBED (deadline 30.06.2026, ~22d as of 2026-06-08). Builder reframe: NOT a submission/XML generator (no Festlegung exists yet) but a live status + decision tracker. Hero = countdown + Abgrenzung-vs-Pauschal economic chooser. v0 of Rung-2 compliance-copilot thesis.
 Read the full PRD from context/initial-prd.md and documents linked therein.
-<!-- SECTION:DESCRIPTION:END -->
+
+Acceptance Criteria:
+No acceptance criteria defined
+
+Definition of Done:
+- [ ] #1 Public GitHub repo (personal), README DE
+- [ ] #2 Author block + free-30min-beratung reach-out hook
+- [ ] #3 Companion LinkedIn post drafted (deadline-bearing-down hook)
+- [ ] #4 Shipped before late June (deadline decay)
+- [ ] #5 Live deploy (Vercel) + server-rendered OG card w/ live countdown + querystring state + embeddable countdown + methodology page
+- [ ] #6 License committed (MIT + CC BY 4.0 data)
+- [ ] #7 Plausible analytics + daily-social auto-post wired
+
+Implementation Plan:
+1. Read context/initial-prd.md in full — done
+2. Read context/regulatory-fact-check.md (Claim 3 — MiSpeL confirmed) — done
+3. Read context/cleantech-credentials-handoff.md (Project #2 spec + tech stack) — done
+4. Read context/venture-research-output.md (Q2 compliance-copilot thesis) — done
+5. Read context/PILOT-HANDOFF.md (pilot operating model, 8–12 task guidance) — done
+6. Create 12 backlog tasks spanning: scaffold → data layer → 4 core v0 features → distribution/infra concerns → content — done
+7. Two tasks set Draft (DRAFT-1 OG card, DRAFT-2 analytics+social) — ambiguous scope requiring grooming
+8. Write HANDOFF.md
+9. Mark MIS-1 Done
+
+Implementation Notes:
+
+## Agent Recommendations
+1. Run MIS-2 first (scaffold blocks everything); MIS-3 can go in parallel once repo exists
+2. MIS-4, MIS-5, MIS-6, MIS-7 are the four core v0 features — can build in parallel after scaffold
+3. Groom DRAFT-1 and DRAFT-2 before they enter the build queue; both need a short human decision
+4. MIS-6 (chooser) is highest-effort and highest-value — budget extra time; computation assumptions need flagging not inventing
+5. v0 deadline: 30.06.2026. As of 2026-06-08 that is ~22 days. Prioritise MIS-2→MIS-6 this week.
+
+## PR
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/1
+<!-- SECTION:NOTES:END -->
 
 ## Implementation Plan
 
@@ -39,17 +74,6 @@ Read the full PRD from context/initial-prd.md and documents linked therein.
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-## Agent Recommendations
-1. Run MIS-2 first (scaffold blocks everything); MIS-3 can go in parallel once repo exists
-2. MIS-4, MIS-5, MIS-6, MIS-7 are the four core v0 features — can build in parallel after scaffold
-3. Groom DRAFT-1 and DRAFT-2 before they enter the build queue; both need a short human decision
-4. MIS-6 (chooser) is highest-effort and highest-value — budget extra time; computation assumptions need flagging not inventing
-5. v0 deadline: 30.06.2026. As of 2026-06-08 that is ~22 days. Prioritise MIS-2→MIS-6 this week.
-
-## PR
-https://github.com/cloudbeagle/mispel-deadline-tracker/pull/1
-<!-- SECTION:NOTES:END -->
-
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
