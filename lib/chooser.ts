@@ -139,7 +139,11 @@ export function calculate(inputs: ChooserInputs): ChooserResult {
 
   let verdictText: string;
   if (empfehlung === 'abgrenzung') {
-    verdictText = `Bei Ihrer Größe (${groesseText}) + ${messtechnikText} lohnt sich die Abgrenzungsoption (§19 Abs. 3b) ab ca. ${fmt(Math.max(0, breakEvenErloese))} €/Jahr Erlös. Ihr aktuell eingegebener Erlöswert liegt ${delta > 0 ? 'darüber' : 'darunter'}.`;
+    if (gruenstromAnteil === 0) {
+      verdictText = `Bei Ihrer Größe (${groesseText}) + ${messtechnikText}: kein Grünstromanteil — die Abgrenzungsoption bringt keinen Erlösvorteil. Unterschied ergibt sich nur aus den Messkosten.`;
+    } else {
+      verdictText = `Bei Ihrer Größe (${groesseText}) + ${messtechnikText} lohnt sich die Abgrenzungsoption (§19 Abs. 3b) ab ca. ${fmt(Math.max(0, breakEvenErloese))} €/Jahr Erlös. Ihr aktuell eingegebener Erlöswert liegt darüber.`;
+    }
   } else if (empfehlung === 'pauschale') {
     verdictText = `Bei Ihrer Größe (${groesseText}) + ${messtechnikText} ist die Pauschaloption (§19 Abs. 3c) vorteilhafter — die höheren Messkosten der Abgrenzungsoption rechnen sich erst ab ca. ${fmt(Math.max(0, breakEvenErloese))} €/Jahr Erlös.`;
   } else {

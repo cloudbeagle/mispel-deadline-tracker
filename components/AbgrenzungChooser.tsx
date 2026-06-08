@@ -278,7 +278,7 @@ export default function AbgrenzungChooser() {
               className="flex-1 rounded-md border border-input bg-muted px-3 py-1.5 text-xs text-muted-foreground font-mono"
             />
             <button
-              onClick={() => navigator.clipboard.writeText(shareUrl)}
+              onClick={() => navigator.clipboard?.writeText(shareUrl).catch(() => {})}
               className="rounded-md border border-input bg-background px-3 py-1.5 text-xs hover:bg-muted transition-colors"
             >
               Kopieren
