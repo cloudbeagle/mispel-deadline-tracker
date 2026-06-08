@@ -5,7 +5,7 @@ status: Done
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 19:16'
-updated_date: '2026-06-08 22:28'
+updated_date: '2026-06-08 22:31'
 labels: []
 dependencies:
   - MIS-2
@@ -19,9 +19,38 @@ ordinal: 7000
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-**State:** Done · **Stage:** PR review fixes merged
+## Synopsis
+**State:** Done · **Stage:** narrated  
+**Next:** Merge PR / human review pending.
+
+---
+
+## Overview
 
 German-language explainer section covering: what MiSpeL is, who is affected, the two options (Abgrenzungsoption and Pauschaloption) and what each demands metering-wise, and the key source links. Per PRD §4 feature 4. Every factual claim links to its primary source (BNetzA Verfahrensseite, §85d EEG, Konsultationsentwurf). Invite-correction CTA at the bottom per PRD §8 credential guardrail.
+
+## Component
+
+**`components/RegulatoryExplainer.tsx`** — standalone React/Tailwind component with six German-language content sections:
+- Was ist MiSpeL? (definition, BNetzA Az. BK6-25-038, §85d EEG 2023, timeline)
+- Wer ist betroffen? (co-located BESS/PV operators, charging point operators, exclusions)
+- Abgrenzungsoption (§19 Abs. 3b EEG) — 15-min interval metering, formula-based allocation, meter cost implications
+- Pauschaloption (§19 Abs. 3c EEG) — simplified pauschal approach, minimal metering, lower cost, worse EEG credit
+- Was dieses Tool NICHT ist (anti-promise block: not legal advice, not official BNetzA tool, orientation values only)
+- Praxisfeedback erwünscht (blue callout with invite-correction CTA + mailto link)
+
+**Details:** See backlog/docs/doc-mis-7 - RegulatoryExplainer-component.md
+
+## Integration
+
+Add to `app/page.tsx` below `<WhatHappensExplainer />` after MIS-4 branch merges:
+```tsx
+import RegulatoryExplainer from '@/components/RegulatoryExplainer';
+// ...
+<RegulatoryExplainer />
+```
+
+Note: WhatHappensExplainer (MIS-4) and RegulatoryExplainer (MIS-7) both cover the two options; consider whether to keep both or consolidate — RegulatoryExplainer is more detailed and should take precedence.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
@@ -54,8 +83,7 @@ German-language explainer section covering: what MiSpeL is, who is affected, the
 
 <!-- SECTION:NOTES:BEGIN -->
 ## PR
-https://github.com/cloudbeagle/mispel-deadline-tracker/pull/10 (pre-existing)
-<!-- SECTION:NOTES:END -->
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/10
 
 ## Final Summary
 
@@ -83,9 +111,6 @@ Created `components/RegulatoryExplainer.tsx` — standalone React/Tailwind compo
 ## Agent Recommendations
 - When merging with MIS-4 branch, add `<RegulatoryExplainer />` to `app/page.tsx` below the `<WhatHappensExplainer />` section.
 - The `WhatHappensExplainer` from MIS-4 overlaps somewhat with this component (both cover the two options); consider whether to keep both or consolidate. `RegulatoryExplainer` is more detailed and should take precedence.
-
-## PR
-https://github.com/cloudbeagle/mispel-deadline-tracker/pull/10
 
 ## External Feedback
 _PR #10_
