@@ -44,3 +44,25 @@
 3. Groom DRAFT-1 and DRAFT-2 before they enter the build queue; both need a short human decision
 4. MIS-6 (chooser) is highest-effort and highest-value — budget extra time; computation assumptions need flagging not inventing
 5. v0 deadline: 30.06.2026. As of 2026-06-08 that is ~22 days. Prioritise MIS-2→MIS-6 this week.
+
+---
+
+## HANDOFF: @sub-agent -> [orchestrator/narrator]
+
+### Summary
+- MIS-7 Done: created `components/RegulatoryExplainer.tsx` — German-language plain-language regulatory explainer component with all 6 ACs satisfied.
+
+### Files Modified
+- `components/RegulatoryExplainer.tsx` — new file; 216 lines; standalone React/Tailwind component
+
+### Verification
+- All 6 ACs checked in backlog
+- Commit 9311ab5 on branch tasks/back-mis-7
+- Component is self-contained; no runtime test needed (content/markup task)
+
+### Open Questions
+- None. Contact link uses `mailto:gaylord.zach@s2tberlin.com` from session context — change if a different contact endpoint is preferred at launch.
+
+### Recommendations
+- When merging with MIS-4 branch, add `<RegulatoryExplainer />` to `app/page.tsx` below the `<WhatHappensExplainer />` section.
+- The `WhatHappensExplainer` from MIS-4 overlaps somewhat with this component (both cover the two options); consider whether to keep both or consolidate. `RegulatoryExplainer` is more detailed and should take precedence.
