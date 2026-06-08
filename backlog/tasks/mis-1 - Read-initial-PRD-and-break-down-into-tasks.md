@@ -1,7 +1,7 @@
 ---
 id: MIS-1
 title: Read initial PRD and break down into tasks
-status: Needs Inputo Do
+status: Needs Input
 assignee: []
 created_date: '2026-06-08 18:31'
 updated_date: '2026-06-08 18:35'

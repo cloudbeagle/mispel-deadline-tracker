@@ -3,9 +3,9 @@
 
 # North star documents injected into agent briefs (optional)
 # Agents read these to understand project context and goals
-north_star: []
-  # - PRODUCT.md
-  # - FRAMEWORK.md
+north_star:
+  - context/initial-prd.md
+  - CLAUDE.md
 
 # Extra files to seed into agent worktrees (optional)
 # HANDOFF-TEMPLATE.md is always included automatically
