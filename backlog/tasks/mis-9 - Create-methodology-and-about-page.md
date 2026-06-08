@@ -45,6 +45,17 @@ Standalone `/methodik` page per PRD §6 viral design. Named author, all data sou
 1. Create app/methodik/page.tsx with metadata export (title + description) and all required sections\n2. Add footer with /methodik link to app/page.tsx\n3. Build: npm run build to verify no TS/ESLint errors\n4. Commit on tasks/back-mis-9\n5. Check off all ACs
 <!-- SECTION:PLAN:END -->
 
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+## Agent Recommendations
+- PR ready to merge on `tasks/back-mis-9`; orchestrator handles merge
+- Once final Festlegung publishes: update the 2 open assumptions in `app/methodik/page.tsx` ASSUMPTIONS array
+
+## PR
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/11
+<!-- SECTION:NOTES:END -->
+
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
