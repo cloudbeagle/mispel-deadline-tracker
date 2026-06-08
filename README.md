@@ -58,7 +58,7 @@ Das Tool ist auf **deutsche Mittelstands-Betreiber** ausgerichtet — plain lang
 ### Lokal ausführen
 
 ```bash
-git clone https://github.com/gaylordzach/mispel-deadline-tracker.git
+git clone https://github.com/cloudbeagle/mispel-deadline-tracker.git
 cd mispel-deadline-tracker
 npm install
 npm run dev
@@ -106,7 +106,7 @@ Alle Daten sind öffentlich zugänglich und quellenverlinkt:
 | Konsultationsentwurf BK6-25-038 (18.09.2025) | Tenor + Anlage 1 (Abgrenzungsoption) + Anlage 2 (Pauschaloption) | Amtlich / öffentlich |
 | §85d EEG 2023, §19 Abs. 3b/3c EEG, §118 Abs. 6 EnWG | Gesetzestext | [gesetze-im-internet.de](https://www.gesetze-im-internet.de) |
 | Stellungnahmen bne, EnBW, 1KOMMA5° (Docket 618-25-02) | Branchen-Einschätzungen zur Praktikabilität | Öffentlich |
-| [open-MaStR (Zenodo DOI 14783581)](https://zenodo.org/records/14783581) | ~X Co-Location BESS in DE potenziell betroffen | CC BY 4.0 |
+| [open-MaStR (Zenodo DOI 14783581)](https://zenodo.org/records/14783581) | Co-Location BESS in DE potenziell betroffen (Anzahl TBD — wird nach Festlegung aktualisiert) | CC BY 4.0 |
 
 Der prozedural-Status (`status.json`) wird manuell gepflegt, versioniert und datiert — mit direktem Quellenlink zu jedem Update.
 
@@ -116,7 +116,7 @@ Der prozedural-Status (`status.json`) wird manuell gepflegt, versioniert und dat
 
 Dieses Tool basiert auf dem Konsultationsentwurf. Einige Koeffizienten (insbesondere Messkonzept-Pauschalen und der genaue Pauschalansatz in §19 Abs. 3c) sind in der finalen Festlegung noch offen — und werden hier explizit so ausgewiesen.
 
-**Korrekturen sind willkommen.** Wer aus der Praxis anderes sieht, schreibt mir bitte — entweder per [Issue auf GitHub](https://github.com/gaylordzach/mispel-deadline-tracker/issues) oder direkt per E-Mail.
+**Korrekturen sind willkommen.** Wer aus der Praxis anderes sieht, schreibt mir bitte — entweder per [Issue auf GitHub](https://github.com/cloudbeagle/mispel-deadline-tracker/issues) oder direkt per E-Mail.
 
 ---
 

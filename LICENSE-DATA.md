@@ -33,7 +33,7 @@ The full legal code of Creative Commons Attribution 4.0 International is availab
 
 When reusing content from this repository, please attribute as follows:
 
-> MiSpeL Deadline & Entscheidungs-Tracker by Gaylord Zach (gaylordzach@gmail.com), licensed under CC BY 4.0. Source: https://github.com/gaylordzach/mispel-deadline-tracker
+> MiSpeL Deadline & Entscheidungs-Tracker by Gaylord Zach (gaylordzach@gmail.com), licensed under CC BY 4.0. Source: https://github.com/cloudbeagle/mispel-deadline-tracker
 
 ---
 
