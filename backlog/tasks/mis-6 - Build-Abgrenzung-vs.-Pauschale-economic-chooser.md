@@ -5,7 +5,7 @@ status: Done
 assignee:
   - '@sub-agent'
 created_date: '2026-06-08 19:16'
-updated_date: '2026-06-08 22:40'
+updated_date: '2026-06-08 22:43'
 labels: []
 dependencies:
   - MIS-2
@@ -41,6 +41,17 @@ The credential core of the tool. An input form + side-by-side € comparison tha
 1. Create lib/chooser.ts — pure calculation logic (coefficients, formulas, types)\n2. Create components/AbgrenzungChooser.tsx — 'use client' form + side-by-side output + verdict + disclaimer\n3. Update app/page.tsx — wire chooser into homepage\n4. Verify TypeScript + build pass\n5. Commit
 <!-- SECTION:PLAN:END -->
 
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+## Agent Recommendations
+1. Run MIS-2 first (scaffold blocks everything); MIS-3 can go in parallel once repo exists
+2. MIS-4, MIS-5, MIS-6, MIS-7 are the four core v0 features — can build in parallel after scaffold
+3. Groom DRAFT-1 and DRAFT-2 before they enter the build queue; both need a short human decision
+4. MIS-6 (chooser) is highest-effort and highest-value — budget extra time; computation assumptions need flagging not inventing
+5. v0 deadline: 30.06.2026. As of 2026-06-08 that is ~22 days. Prioritise MIS-2→MIS-6 this week.
+<!-- SECTION:NOTES:END -->
+
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
@@ -52,13 +63,6 @@ The credential core of the tool. An input form + side-by-side € comparison tha
 
 **tsc --noEmit:** clean after fixes.
 <!-- SECTION:FINAL_SUMMARY:END -->
-
-## Agent Recommendations
-1. Run MIS-2 first (scaffold blocks everything); MIS-3 can go in parallel once repo exists
-2. MIS-4, MIS-5, MIS-6, MIS-7 are the four core v0 features — can build in parallel after scaffold
-3. Groom DRAFT-1 and DRAFT-2 before they enter the build queue; both need a short human decision
-4. MIS-6 (chooser) is highest-effort and highest-value — budget extra time; computation assumptions need flagging not inventing
-5. v0 deadline: 30.06.2026. As of 2026-06-08 that is ~22 days. Prioritise MIS-2→MIS-6 this week.
 
 ## PR
 https://github.com/cloudbeagle/mispel-deadline-tracker/pull/9
