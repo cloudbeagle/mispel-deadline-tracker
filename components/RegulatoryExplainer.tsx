@@ -35,8 +35,8 @@ export default function RegulatoryExplainer() {
               Festlegungsverfahren der Bundesnetzagentur (Az.&nbsp;BK6-25-038)
             </Src>
             , das regelt, wie gemischt genutzte Batteriespeicher und Ladepunkte künftig behandelt
-            werden — insbesondere wie der aus dem Netz bezogene „Graustrom" vom solar erzeugten
-            „Grünstrom" zu trennen ist.
+            werden — insbesondere wie der aus dem Netz bezogene „Graustrom“ vom solar erzeugten
+            „Grünstrom“ zu trennen ist.
           </p>
           <p>
             Rechtsgrundlage ist{' '}
