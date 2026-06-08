@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getStatus } from '../lib/status';
 import StatusBanner from '../components/StatusBanner';
 import CountdownHero from '../components/CountdownHero';
@@ -31,6 +32,27 @@ export default function Home() {
         </div>
 
         <WhatHappensExplainer />
+
+        <footer className="border-t pt-6 text-center text-xs text-muted-foreground space-y-1">
+          <p>
+            <Link href="/methodik" className="underline hover:no-underline">
+              Methodik & Datenquellen
+            </Link>
+            {' · '}
+            Keine Rechtsberatung · Kein offizielles BNetzA-Tool
+          </p>
+          <p>
+            kuratiert von{' '}
+            <a
+              href="https://www.linkedin.com/in/gaylordzach/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:no-underline"
+            >
+              Gaylord Zach
+            </a>
+          </p>
+        </footer>
       </div>
     </main>
   );
