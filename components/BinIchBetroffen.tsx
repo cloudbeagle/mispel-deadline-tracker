@@ -1,7 +1,17 @@
 'use client';
 
+/*
+ * Querystring params (decision tree state — AC #7):
+ *   mixed       boolean  "true"|"false"  — Mixed-Use/Co-Location-Speicher?
+ *   eeg         boolean  "true"|"false"  — EEG-Anlage am Netzanschlusspunkt?
+ *   netz        boolean  "true"|"false"  — Netzstrom überwiegt beim Laden?
+ *   lp          boolean  "true"|"false"  — Ladepunkt-Betreiber?
+ *
+ * Chooser params (groesse, netzanteil, erloese, messtechnik) are preserved
+ * unchanged when this component updates the URL.
+ */
+
 import { Suspense, useCallback, useEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { AlertCircle, CheckCircle, ChevronRight, RotateCcw, XCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -260,36 +270,47 @@ function VerdictPanel({ verdict, state }: { verdict: Verdict; state: TreeState }
   );
 }
 
+const TREE_KEYS = ['mixed', 'eeg', 'netz', 'lp'] as const;
+
+function replaceTreeState(next: TreeState) {
+  const merged = new URLSearchParams(window.location.search);
+  TREE_KEYS.forEach(k => merged.delete(k));
+  stateToParams(next).forEach((v, k) => merged.set(k, v));
+  const qs = merged.toString();
+  window.history.replaceState({}, '', `${window.location.pathname}${qs ? '?' + qs : ''}`);
+}
+
 function BinIchBetrofenInner() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [state, setState] = useState<TreeState>(INITIAL_STATE);
 
+  // Hydrate from URL querystring on mount
   useEffect(() => {
-    setState(paramsToState(searchParams));
-  }, [searchParams]);
+    setState(paramsToState(new URLSearchParams(window.location.search)));
+  }, []);
 
   const answer = useCallback(
     (key: keyof TreeState, val: boolean) => {
-      const next = { ...state, [key]: val };
-      // clear downstream answers when branching changes
-      if (key === 'mixed' && !val) {
-        next.eeg = null; next.netz = null; next.lp = null;
-      } else if (key === 'eeg' && !val) {
-        next.netz = null; next.lp = null;
-      } else if (key === 'netz' && val) {
-        next.lp = null;
-      }
-      const params = stateToParams(next).toString();
-      router.push(`${pathname}${params ? '?' + params : ''}`, { scroll: false });
+      setState(prev => {
+        const next = { ...prev, [key]: val };
+        // clear downstream answers when branching changes
+        if (key === 'mixed' && !val) {
+          next.eeg = null; next.netz = null; next.lp = null;
+        } else if (key === 'eeg' && !val) {
+          next.netz = null; next.lp = null;
+        } else if (key === 'netz' && val) {
+          next.lp = null;
+        }
+        replaceTreeState(next);
+        return next;
+      });
     },
-    [state, router, pathname],
+    [],
   );
 
   const reset = useCallback(() => {
-    router.push(pathname, { scroll: false });
-  }, [router, pathname]);
+    replaceTreeState(INITIAL_STATE);
+    setState(INITIAL_STATE);
+  }, []);
 
   const verdict = computeVerdict(state);
   const active = activeQuestion(state);

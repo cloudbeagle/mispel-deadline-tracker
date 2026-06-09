@@ -5,6 +5,7 @@ import CountdownHero from '../components/CountdownHero';
 import WhatHappensExplainer from '../components/WhatHappensExplainer';
 import AbgrenzungChooser from '../components/AbgrenzungChooser';
 import BinIchBetroffen from '../components/BinIchBetroffen';
+import ShareBar from '../components/ShareBar';
 
 // 2026-06-30 23:59 CEST (UTC+2) = 2026-06-30T21:59:00Z
 const DEADLINE_UTC = new Date('2026-06-30T21:59:00Z').getTime();
@@ -32,6 +33,8 @@ export default function Home() {
         <div className="rounded-xl border bg-card px-6 py-10 shadow-sm">
           <CountdownHero initialDays={initialDays} deadlinePassed={deadlinePassed} />
         </div>
+
+        <ShareBar />
 
         <WhatHappensExplainer />
 
