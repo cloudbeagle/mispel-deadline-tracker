@@ -11,7 +11,7 @@
  * unchanged when this component updates the URL.
  */
 
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AlertCircle, CheckCircle, ChevronRight, RotateCcw, XCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -272,17 +272,27 @@ function VerdictPanel({ verdict, state }: { verdict: Verdict; state: TreeState }
 
 const TREE_KEYS = ['mixed', 'eeg', 'netz', 'lp'] as const;
 
-function replaceTreeState(next: TreeState) {
+function syncTreeState(next: TreeState, push: boolean) {
   const merged = new URLSearchParams(window.location.search);
   TREE_KEYS.forEach(k => merged.delete(k));
   stateToParams(next).forEach((v, k) => merged.set(k, v));
   const qs = merged.toString();
-  window.history.replaceState({}, '', `${window.location.pathname}${qs ? '?' + qs : ''}`);
+  const url = `${window.location.pathname}${qs ? '?' + qs : ''}`;
+  // pushState for user-initiated answers (so Back undoes the last answer);
+  // replaceState for hydration-driven writes (no spurious history entry).
+  if (push) {
+    window.history.pushState({}, '', url);
+  } else {
+    window.history.replaceState({}, '', url);
+  }
 }
 
 function BinIchBetrofenInner() {
   const [state, setState] = useState<TreeState>(INITIAL_STATE);
   const [hydrated, setHydrated] = useState(false);
+  // true when the next state change came from a user click (answer/reset),
+  // so the URL-sync effect pushState (Back works) vs replaceState (hydration).
+  const userActionRef = useRef(false);
 
   // Hydrate from URL querystring on mount
   useEffect(() => {
@@ -290,14 +300,30 @@ function BinIchBetrofenInner() {
     setHydrated(true);
   }, []);
 
-  // Sync state to URL — runs only after hydration to avoid overwriting URL params on mount
+  // Back/forward: re-read the URL into state so the tree reflects the
+  // popped history entry. Mark non-user so the sync effect replaceState's
+  // (no new pushState) instead of fighting the navigation.
+  useEffect(() => {
+    const onPop = () => {
+      userActionRef.current = false;
+      setState(paramsToState(new URLSearchParams(window.location.search)));
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  // Sync state to URL — runs only after hydration to avoid overwriting URL params on mount.
+  // User answers pushState (Back-button steps through answers); hydration replaceState.
   useEffect(() => {
     if (!hydrated) return;
-    replaceTreeState(state);
+    const push = userActionRef.current;
+    userActionRef.current = false;
+    syncTreeState(state, push);
   }, [state, hydrated]);
 
   const answer = useCallback(
     (key: keyof TreeState, val: boolean) => {
+      userActionRef.current = true;
       setState(prev => {
         const next = { ...prev, [key]: val };
         // clear downstream answers when branching changes
@@ -315,6 +341,7 @@ function BinIchBetrofenInner() {
   );
 
   const reset = useCallback(() => {
+    userActionRef.current = true;
     setState(INITIAL_STATE);
   }, []);
 
@@ -365,9 +392,5 @@ function BinIchBetrofenInner() {
 }
 
 export default function BinIchBetroffen() {
-  return (
-    <Suspense fallback={<div className="rounded-xl border bg-card px-6 py-8 shadow-sm animate-pulse h-64" />}>
-      <BinIchBetrofenInner />
-    </Suspense>
-  );
+  return <BinIchBetrofenInner />;
 }
