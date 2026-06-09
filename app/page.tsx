@@ -1,14 +1,12 @@
 import Link from 'next/link';
 import { getStatus } from '../lib/status';
+import { DEADLINE_UTC } from '../lib/deadline';
 import StatusBanner from '../components/StatusBanner';
 import CountdownHero from '../components/CountdownHero';
 import WhatHappensExplainer from '../components/WhatHappensExplainer';
 import AbgrenzungChooser from '../components/AbgrenzungChooser';
 import BinIchBetroffen from '../components/BinIchBetroffen';
 import ShareBar from '../components/ShareBar';
-
-// 2026-06-30 23:59 CEST (UTC+2) = 2026-06-30T21:59:00Z
-const DEADLINE_UTC = new Date('2026-06-30T21:59:00Z').getTime();
 
 export default function Home() {
   const status = getStatus();

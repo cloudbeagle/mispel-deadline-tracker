@@ -282,11 +282,19 @@ function replaceTreeState(next: TreeState) {
 
 function BinIchBetrofenInner() {
   const [state, setState] = useState<TreeState>(INITIAL_STATE);
+  const [hydrated, setHydrated] = useState(false);
 
   // Hydrate from URL querystring on mount
   useEffect(() => {
     setState(paramsToState(new URLSearchParams(window.location.search)));
+    setHydrated(true);
   }, []);
+
+  // Sync state to URL — runs only after hydration to avoid overwriting URL params on mount
+  useEffect(() => {
+    if (!hydrated) return;
+    replaceTreeState(state);
+  }, [state, hydrated]);
 
   const answer = useCallback(
     (key: keyof TreeState, val: boolean) => {
@@ -300,7 +308,6 @@ function BinIchBetrofenInner() {
         } else if (key === 'netz' && val) {
           next.lp = null;
         }
-        replaceTreeState(next);
         return next;
       });
     },
@@ -308,7 +315,6 @@ function BinIchBetrofenInner() {
   );
 
   const reset = useCallback(() => {
-    replaceTreeState(INITIAL_STATE);
     setState(INITIAL_STATE);
   }, []);
 

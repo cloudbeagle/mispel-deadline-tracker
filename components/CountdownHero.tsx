@@ -1,9 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
-// 2026-06-30 23:59 CEST = UTC+2 → 2026-06-30T21:59:00Z
-const DEADLINE_UTC = new Date('2026-06-30T21:59:00Z').getTime();
+import { DEADLINE_UTC } from '../lib/deadline';
 
 function computeRemaining(now: number) {
   const diff = DEADLINE_UTC - now;

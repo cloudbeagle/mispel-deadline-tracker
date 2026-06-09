@@ -7,15 +7,15 @@
 //   title="MiSpeL Deadline Countdown"></iframe>
 
 import { useEffect, useState } from 'react';
-
-// 2026-06-30 23:59 CEST (UTC+2) = 2026-06-30T21:59:00Z
-const DEADLINE_UTC = new Date('2026-06-30T21:59:00Z').getTime();
+import { DEADLINE_UTC } from '../../../lib/deadline';
 
 export default function EmbedCountdownPage() {
   const [days, setDays] = useState<number | null>(null);
   const [passed, setPassed] = useState(false);
+  const [origin, setOrigin] = useState('');
 
   useEffect(() => {
+    setOrigin(window.location.origin);
     const update = () => {
       const diff = DEADLINE_UTC - Date.now();
       if (diff <= 0) {
@@ -89,16 +89,18 @@ export default function EmbedCountdownPage() {
         {statusLabel}
       </p>
 
-      <p style={{ margin: '4px 0 0', fontSize: '9px', color: '#bbb' }}>
-        <a
-          href="https://mispel-deadline-tracker.vercel.app"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: '#bbb', textDecoration: 'none' }}
-        >
-          mispel-deadline-tracker.vercel.app
-        </a>
-      </p>
+      {origin && (
+        <p style={{ margin: '4px 0 0', fontSize: '9px', color: '#bbb' }}>
+          <a
+            href={origin}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#bbb', textDecoration: 'none' }}
+          >
+            {origin.replace(/^https?:\/\//, '')}
+          </a>
+        </p>
+      )}
     </div>
   );
 }
