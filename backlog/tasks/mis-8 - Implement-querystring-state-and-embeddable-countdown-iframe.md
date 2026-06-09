@@ -48,6 +48,16 @@ Two distribution mechanics per PRD §6. (1) Querystring state: encode decision t
 7. Commit and check off ACs.
 <!-- SECTION:PLAN:END -->
 
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+## Agent Recommendations
+- Open PR against main; no follow-up tasks needed for this scope
+
+## PR
+https://github.com/cloudbeagle/mispel-deadline-tracker/pull/14
+<!-- SECTION:NOTES:END -->
+
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
