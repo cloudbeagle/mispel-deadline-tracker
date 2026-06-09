@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import { getStatus } from '../lib/status';
+import { DEADLINE_UTC } from '../lib/deadline';
 import StatusBanner from '../components/StatusBanner';
 import CountdownHero from '../components/CountdownHero';
 import WhatHappensExplainer from '../components/WhatHappensExplainer';
 import AbgrenzungChooser from '../components/AbgrenzungChooser';
 import BinIchBetroffen from '../components/BinIchBetroffen';
-
-// 2026-06-30 23:59 CEST (UTC+2) = 2026-06-30T21:59:00Z
-const DEADLINE_UTC = new Date('2026-06-30T21:59:00Z').getTime();
+import ShareBar from '../components/ShareBar';
 
 export default function Home() {
   const status = getStatus();
@@ -32,6 +31,8 @@ export default function Home() {
         <div className="rounded-xl border bg-card px-6 py-10 shadow-sm">
           <CountdownHero initialDays={initialDays} deadlinePassed={deadlinePassed} />
         </div>
+
+        <ShareBar />
 
         <WhatHappensExplainer />
 

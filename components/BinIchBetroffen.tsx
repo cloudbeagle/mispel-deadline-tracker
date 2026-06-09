@@ -1,7 +1,17 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+/*
+ * Querystring params (decision tree state — AC #7):
+ *   mixed       boolean  "true"|"false"  — Mixed-Use/Co-Location-Speicher?
+ *   eeg         boolean  "true"|"false"  — EEG-Anlage am Netzanschlusspunkt?
+ *   netz        boolean  "true"|"false"  — Netzstrom überwiegt beim Laden?
+ *   lp          boolean  "true"|"false"  — Ladepunkt-Betreiber?
+ *
+ * Chooser params (groesse, netzanteil, erloese, messtechnik) are preserved
+ * unchanged when this component updates the URL.
+ */
+
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AlertCircle, CheckCircle, ChevronRight, RotateCcw, XCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -260,36 +270,80 @@ function VerdictPanel({ verdict, state }: { verdict: Verdict; state: TreeState }
   );
 }
 
-function BinIchBetrofenInner() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [state, setState] = useState<TreeState>(INITIAL_STATE);
+const TREE_KEYS = ['mixed', 'eeg', 'netz', 'lp'] as const;
 
+function syncTreeState(next: TreeState, push: boolean) {
+  const merged = new URLSearchParams(window.location.search);
+  TREE_KEYS.forEach(k => merged.delete(k));
+  stateToParams(next).forEach((v, k) => merged.set(k, v));
+  const qs = merged.toString();
+  const url = `${window.location.pathname}${qs ? '?' + qs : ''}`;
+  // pushState for user-initiated answers (so Back undoes the last answer);
+  // replaceState for hydration-driven writes (no spurious history entry).
+  if (push) {
+    window.history.pushState({}, '', url);
+  } else {
+    window.history.replaceState({}, '', url);
+  }
+}
+
+function BinIchBetrofenInner() {
+  const [state, setState] = useState<TreeState>(INITIAL_STATE);
+  const [hydrated, setHydrated] = useState(false);
+  // true when the next state change came from a user click (answer/reset),
+  // so the URL-sync effect pushState (Back works) vs replaceState (hydration).
+  const userActionRef = useRef(false);
+
+  // Hydrate from URL querystring on mount
   useEffect(() => {
-    setState(paramsToState(searchParams));
-  }, [searchParams]);
+    setState(paramsToState(new URLSearchParams(window.location.search)));
+    setHydrated(true);
+  }, []);
+
+  // Back/forward: re-read the URL into state so the tree reflects the
+  // popped history entry. Mark non-user so the sync effect replaceState's
+  // (no new pushState) instead of fighting the navigation.
+  useEffect(() => {
+    const onPop = () => {
+      userActionRef.current = false;
+      setState(paramsToState(new URLSearchParams(window.location.search)));
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  // Sync state to URL — runs only after hydration to avoid overwriting URL params on mount.
+  // User answers pushState (Back-button steps through answers); hydration replaceState.
+  useEffect(() => {
+    if (!hydrated) return;
+    const push = userActionRef.current;
+    userActionRef.current = false;
+    syncTreeState(state, push);
+  }, [state, hydrated]);
 
   const answer = useCallback(
     (key: keyof TreeState, val: boolean) => {
-      const next = { ...state, [key]: val };
-      // clear downstream answers when branching changes
-      if (key === 'mixed' && !val) {
-        next.eeg = null; next.netz = null; next.lp = null;
-      } else if (key === 'eeg' && !val) {
-        next.netz = null; next.lp = null;
-      } else if (key === 'netz' && val) {
-        next.lp = null;
-      }
-      const params = stateToParams(next).toString();
-      router.push(`${pathname}${params ? '?' + params : ''}`, { scroll: false });
+      userActionRef.current = true;
+      setState(prev => {
+        const next = { ...prev, [key]: val };
+        // clear downstream answers when branching changes
+        if (key === 'mixed' && !val) {
+          next.eeg = null; next.netz = null; next.lp = null;
+        } else if (key === 'eeg' && !val) {
+          next.netz = null; next.lp = null;
+        } else if (key === 'netz' && val) {
+          next.lp = null;
+        }
+        return next;
+      });
     },
-    [state, router, pathname],
+    [],
   );
 
   const reset = useCallback(() => {
-    router.push(pathname, { scroll: false });
-  }, [router, pathname]);
+    userActionRef.current = true;
+    setState(INITIAL_STATE);
+  }, []);
 
   const verdict = computeVerdict(state);
   const active = activeQuestion(state);
@@ -338,9 +392,5 @@ function BinIchBetrofenInner() {
 }
 
 export default function BinIchBetroffen() {
-  return (
-    <Suspense fallback={<div className="rounded-xl border bg-card px-6 py-8 shadow-sm animate-pulse h-64" />}>
-      <BinIchBetrofenInner />
-    </Suspense>
-  );
+  return <BinIchBetrofenInner />;
 }

@@ -1,5 +1,16 @@
 'use client';
 
+/*
+ * Querystring params (chooser state — AC #7):
+ *   groesse      string   "<kWh>_<kW>"  — Speichergröße und -leistung, z.B. "500_250"
+ *   netzanteil   number   0–100         — Jährl. Netzbezug-Anteil (%)
+ *   erloese      number   ≥0            — Direktvermarktungs-Erlös p.a. (€)
+ *   messtechnik  string   "rlm"|"keine" — RLM-Messung vorhanden?
+ *
+ * Decision-tree params (mixed, eeg, netz, lp) are preserved unchanged when
+ * this component updates the URL.
+ */
+
 import { useState, useEffect } from 'react';
 import {
   calculate,
@@ -56,12 +67,16 @@ export default function AbgrenzungChooser() {
     }
   }, []);
 
-  // Recompute + update querystring on input change
+  // Recompute + update querystring on input change (preserves decision-tree params)
   useEffect(() => {
     const res = calculate(inputs);
     setResult(res);
-    const qs = buildQueryString(inputs);
-    const url = `${window.location.pathname}?${qs}`;
+    const chooserKeys = ['groesse', 'netzanteil', 'erloese', 'messtechnik'];
+    const merged = new URLSearchParams(window.location.search);
+    chooserKeys.forEach(k => merged.delete(k));
+    new URLSearchParams(buildQueryString(inputs)).forEach((v, k) => merged.set(k, v));
+    const qs = merged.toString();
+    const url = `${window.location.pathname}${qs ? '?' + qs : ''}`;
     window.history.replaceState({}, '', url);
     setShareUrl(`${window.location.origin}${url}`);
   }, [inputs]);

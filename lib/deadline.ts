@@ -1,0 +1,2 @@
+// 2026-06-30 23:59 CEST (UTC+2) = 2026-06-30T21:59:00Z
+export const DEADLINE_UTC = new Date('2026-06-30T21:59:00Z').getTime();
