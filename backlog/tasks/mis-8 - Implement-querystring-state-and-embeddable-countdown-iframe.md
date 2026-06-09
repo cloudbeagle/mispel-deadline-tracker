@@ -20,9 +20,12 @@ ordinal: 8000
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
 ## Synopsis
-**State:** Done · **Stage:** implementation complete / **Next:** none; narrator will document.
+**State:** Done · **Stage:** narrated
+**Next:** Merge PR / human review pending.
 
-Two distribution mechanics per PRD §6. (1) Querystring state: encode decision tree + chooser inputs in the URL so any result is shareable as a link. (2) Embeddable countdown: a `/embed/countdown` route that renders an iframe-friendly countdown widget for Kanzlei/blog embedding. "Copy embed" button outputs a one-line `<iframe>` snippet.
+Two distribution mechanics per PRD §6 now implemented: (1) Querystring state — decision tree and chooser inputs encoded in URL for shareable results; (2) Embeddable countdown — `/embed/countdown` route renders 400×120px iframe-friendly countdown widget for partner sites. Share buttons copy both shareable URL and iframe snippet.
+
+See [doc-mis-8 - Querystring State and Embeddable Countdown](backlog/docs/doc-mis-8%20-%20Querystring%20State%20and%20Embeddable%20Countdown.md) for implementation details.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
